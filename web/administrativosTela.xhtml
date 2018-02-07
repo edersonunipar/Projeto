@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="template.xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+   
+    
+        <h:form>
+            
+            
+            <p:messages autoUpdate="true" showDetail="true"></p:messages>
+            
+            <p:fieldset legend="Cadastro de Administrativos">
+                <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Novo" action="#{professorBean.novo()}" update="@form"></p:commandButton>
+                    <p:commandButton value="Salvar" action="#{professorBean.salvar()}" disabled="#{professorBean.busca == true}" update="@form"></p:commandButton>
+                    <p:commandButton value="Buscar" action="#{professorBean.buscar()}" update="@form"></p:commandButton>
+                </p:toolbarGroup>
+                
+            </p:toolbar>
+                <p:panelGrid columns="2" rendered="#{professorBean.busca == false}">
+                <h:outputLabel value="Nome:"></h:outputLabel>
+                <p:inputText value="#{professorBean.entidade.nome}"></p:inputText>
+                <h:outputLabel value="RG:"></h:outputLabel>
+                <p:inputText value="#{professorBean.entidade.rg}"></p:inputText>
+                <h:outputLabel value="Cargo:"></h:outputLabel>
+                <p:inputText value="#{professorBean.entidade.cargo}"></p:inputText>
+                <h:outputLabel value="Setor:"></h:outputLabel>
+                <p:inputText value="#{professorBean.entidade.setor}"></p:inputText>
+                 <h:outputLabel value="Nivel:"></h:outputLabel>
+                 <p:inputText value="#{professorBean.entidade.nivel}"></p:inputText>
+                 <h:outputLabel value="Qaulificacao:"></h:outputLabel>
+                 <p:selectOneMenu id="quali" value="#{professorBean.entidade.qualificacao.nome}" converter="qualificacaoCoverter">
+                     <f:selectItem itemLabel="Selecione a qualificacao" itemValue=""/>
+                     <f:selectItems value="#{professorBean.entidade.qualificacao}" var="qualificacao"
+                                    itemLabel="#{qualificacao.nome}" itemValue="#{qualificacao}">
+                 </p:selectOneMenu>
+                 
+                </p:panelGrid>
+                <p:dataTable value="#{professorBean.entidades}" var="adm" rendered="#{professorBean.busca == true}">
+                    
+                    <p:column>
+                        <p:commandButton value="Editar" action="#{professorBean.editar(adm)}" update="@form"></p:commandButton>
+                        <p:commandButton value="Deletar" action="#{professorBean.deletar(adm)}" update="@form"></p:commandButton>
+                    </p:column>
+                    
+                    <p:column headerText="Nome" sortBy="#{adm.nome}">
+                        <h:outputText value="#{adm.nome}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="RG">
+                        <h:outputText value="#{adm.rg}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Cargo">
+                        <h:outputText value="#{adm.cargo}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Setor">
+                        <h:outputText value="#{adm.setor}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="nivel">
+                        <h:outputText value="#{adm.nivel}"></h:outputText>
+                    </p:column>
+                </p:dataTable>   
+                
+        </p:fieldset>
+        </h:form>
+    
+</ui:decorate>
+
